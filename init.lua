@@ -295,7 +295,6 @@ local cmps = {
 local colorschemes = {
 	{
 		"catppuccin/nvim",
-		opts = {},
 	},
 }
 
