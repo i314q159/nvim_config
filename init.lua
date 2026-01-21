@@ -114,11 +114,6 @@ local lsps = {
 				"lua_ls",
 				"stylua",
 				"gopls",
-				"black",
-				"isort",
-				"pylsp",
-				"pyright",
-				"jsonls",
 			},
 		},
 	},
@@ -132,27 +127,10 @@ local treesitters = {
 		},
 		build = ":TSUpdate",
 		config = function()
-			require("nvim-treesitter.install").prefer_git = true
-			for _, config in pairs(require("nvim-treesitter.parsers").get_parser_configs()) do
-				config.install_info.url =
-					config.install_info.url:gsub("https://github.com/", mirror .. "https://github.com/")
-			end
-
-			require("nvim-treesitter.configs").setup({
-				highlight = {
-					enable = true,
-				},
-				auto_install = true,
-				sync_install = true,
-				indent = {
-					enable = true,
-				},
-				modules = {},
-				ensure_installed = {},
-				ignore_install = {},
-				autotag = {
-					enable = true,
-				},
+			require("nvim-treesitter").install({
+				"rust",
+				"go",
+				"lua",
 			})
 		end,
 	},
@@ -264,10 +242,6 @@ local folkes = {
 
 local icons = {
 	{
-		"echasnovski/mini.icons",
-		opt = {},
-	},
-	{
 		"nvim-tree/nvim-web-devicons",
 		opts = {},
 	},
@@ -276,6 +250,17 @@ local icons = {
 local fmts = {
 	{
 		"sbdchd/neoformat",
+	},
+	{
+		"stevearc/conform.nvim",
+		opts = {
+			formatters_by_ft = {
+				lua = { "stylua" },
+			},
+			format_on_save = {
+				lsp_format = "fallback",
+			},
+		},
 	},
 }
 
@@ -309,6 +294,19 @@ local mds = {
 	},
 }
 
+local file_explorers = {
+	{
+		"A7Lavinraj/fyler.nvim",
+		branch = "stable", -- Use stable branch for production
+		lazy = false, -- Necessary for `default_explorer` to work properly
+		opts = {
+			keys = {
+				{ "<leader>f", "<cmd>lua require('fyler').fyler.open <cr>", desc = "Open fyler View" },
+			},
+		},
+	},
+}
+
 local plugins = {
 	cmps,
 	fmts,
@@ -319,6 +317,7 @@ local plugins = {
 	mds,
 	treesitters,
 	colorschemes,
+	file_explorers,
 	{
 		"axieax/urlview.nvim",
 		lazy = false,
@@ -441,7 +440,7 @@ local plugins = {
 	{
 		"nvim-telescope/telescope.nvim",
 		keys = {
-			{ "<leader>f", "<cmd>Telescope<cr>", desc = "Telescope" },
+			{ "<leader>t", "<cmd>Telescope<cr>", desc = "Telescope" },
 		},
 		opts = {},
 	},
@@ -474,7 +473,7 @@ local plugins = {
 	{
 		"xlboy/vscode-opener.nvim",
 		keys = {
-			{ "<leader>c", "<cmd>lua require('vscode-opener').open()<CR>", desc = "Open VSCode Opener Menu" },
+			{ "<leader>c", "<cmd>lua require('vscode-opener').open()<cr>", desc = "Open VSCode Opener Menu" },
 		},
 	},
 	{
