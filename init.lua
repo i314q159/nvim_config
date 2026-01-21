@@ -296,13 +296,17 @@ local mds = {
 
 local file_explorers = {
 	{
-		"A7Lavinraj/fyler.nvim",
-		branch = "stable", -- Use stable branch for production
-		lazy = false, -- Necessary for `default_explorer` to work properly
-		opts = {
-			keys = {
-				{ "<leader>f", "<cmd>lua require('fyler').fyler.open <cr>", desc = "Open fyler View" },
-			},
+		"stevearc/oil.nvim",
+		---@module 'oil'
+		---@type oil.SetupOpts
+		opts = {},
+		-- Optional dependencies
+		-- dependencies = { { "nvim-mini/mini.icons", opts = {} } },
+		dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
+		-- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
+		lazy = false,
+		keys = {
+			{ "<leader>e", "<cmd>Oil .<cr>", desc = "Oil root directory" },
 		},
 	},
 }
@@ -453,11 +457,12 @@ local plugins = {
 		},
 		opts = {
 			outline_window = {
-				width = 30,
+				width = 40,
 				relative_width = true,
+				auto_close = true,
 				auto_jump = true,
 				show_numbers = true,
-				show_relative_numbers = true,
+				show_relative_numbers = false,
 				wrap = true,
 			},
 		},
