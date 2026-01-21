@@ -81,6 +81,9 @@ local opts = {
 		enabled = true,
 		notify = false,
 	},
+	rocks = {
+		enabled = false,
+	},
 }
 
 local lsps = {
@@ -116,6 +119,11 @@ local lsps = {
 				"gopls",
 			},
 		},
+	},
+	{
+		"jinzhongjia/LspUI.nvim",
+		branch = "main",
+		opts = {},
 	},
 }
 
@@ -279,7 +287,7 @@ local cmps = {
 
 local colorschemes = {
 	{
-		"catppuccin/nvim",
+		"AlexvZyl/nordic.nvim",
 	},
 }
 
@@ -300,10 +308,7 @@ local file_explorers = {
 		---@module 'oil'
 		---@type oil.SetupOpts
 		opts = {},
-		-- Optional dependencies
-		-- dependencies = { { "nvim-mini/mini.icons", opts = {} } },
 		dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
-		-- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
 		lazy = false,
 		keys = {
 			{ "<leader>e", "<cmd>Oil .<cr>", desc = "Oil root directory" },
