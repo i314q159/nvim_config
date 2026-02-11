@@ -136,7 +136,6 @@ local treesitters = {
 		build = ":TSUpdate",
 		config = function()
 			require("nvim-treesitter").install({
-				"rust",
 				"go",
 				"lua",
 			})
