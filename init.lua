@@ -101,7 +101,7 @@ local fmt_setttings = {
 	python = { "isort", "black" },
 }
 
-local lsps = {
+local tag_lsp = {
 	{
 		"williamboman/mason-lspconfig.nvim",
 		dependencies = {
@@ -132,13 +132,31 @@ local lsps = {
 		},
 	},
 	{
-		"jinzhongjia/LspUI.nvim",
-		branch = "main",
+		"VidocqH/lsp-lens.nvim",
 		opts = {},
+	},
+	{
+		"hedyhli/outline.nvim",
+		lazy = true,
+		cmd = { "Outline", "OutlineOpen" },
+		keys = {
+			{ "<leader>o", "<cmd>Outline<cr>", desc = "Toggle Outline" },
+		},
+		opts = {
+			outline_window = {
+				width = 40,
+				relative_width = true,
+				auto_close = true,
+				auto_jump = true,
+				show_numbers = true,
+				show_relative_numbers = false,
+				wrap = true,
+			},
+		},
 	},
 }
 
-local treesitters = {
+local tag_syntax = {
 	{
 		"nvim-treesitter/nvim-treesitter",
 		dependencies = {
@@ -165,6 +183,10 @@ local treesitters = {
 	},
 	{
 		"windwp/nvim-ts-autotag",
+		opts = {},
+	},
+	{
+		"m-demare/hlargs.nvim",
 		opts = {},
 	},
 }
@@ -256,6 +278,13 @@ local uis = {
 	},
 }
 
+local tag_icon = {
+	{
+		"nvim-tree/nvim-web-devicons",
+		opts = {},
+	},
+}
+
 local folkes = {
 	{
 		"folke/which-key.nvim",
@@ -300,14 +329,7 @@ local folkes = {
 	},
 }
 
-local icons = {
-	{
-		"nvim-tree/nvim-web-devicons",
-		opts = {},
-	},
-}
-
-local fmts = {
+local tag_formatting = {
 	{
 		"sbdchd/neoformat",
 	},
@@ -320,9 +342,13 @@ local fmts = {
 			},
 		},
 	},
+	{
+		"vidocqh/auto-indent.nvim",
+		opts = {},
+	},
 }
 
-local cmps = {
+local tag_completion = {
 	{
 		"saghen/blink.cmp",
 		version = "1.*",
@@ -334,27 +360,18 @@ local cmps = {
 	},
 }
 
-local colorschemes = {
+local tag_colorscheme = {
 	{
-		"AlexvZyl/nordic.nvim",
+		"catppuccin/nvim",
+		name = "catppuccin",
+		priority = 1000,
 	},
 	{
-		"vyfor/cord.nvim",
-	},
-}
-
-local mds = {
-	{
-		"MeanderingProgrammer/render-markdown.nvim",
-		dependencies = {
-			"nvim-treesitter/nvim-treesitter",
-			"nvim-tree/nvim-web-devicons",
-		},
-		opts = {},
+		"EdenEast/nightfox.nvim",
 	},
 }
 
-local file_explorers = {
+local tag_file_explorer = {
 	{
 		"stevearc/oil.nvim",
 		opts = {},
@@ -376,7 +393,7 @@ local imes = {
 	},
 }
 
-local gits = {
+local tag_git = {
 	{
 		"lewis6991/gitsigns.nvim",
 		opts = {},
@@ -393,13 +410,17 @@ local gits = {
 	},
 }
 
-local others = {
+local tag_editing_support = {
 	{
-		"nguyenvukhang/nvim-toggler",
-		keys = {
-			{ "<leader>i", "require('nvim-toggler').toggle", desc = "Toggle Word" },
-		},
+		"windwp/nvim-autopairs",
 		opts = {},
+	},
+	{
+		"qwavies/smart-backspace.nvim",
+		event = { "InsertEnter", "CmdlineEnter" },
+		opts = {
+			map_bs = false,
+		},
 	},
 	{
 		"numToStr/Comment.nvim",
@@ -408,26 +429,15 @@ local others = {
 		},
 	},
 	{
-		"windwp/nvim-autopairs",
+		"nguyenvukhang/nvim-toggler",
+		keys = {
+			{ "<leader>i", "require('nvim-toggler').toggle", desc = "Toggle Word" },
+		},
 		opts = {},
 	},
 	{
 		"ethanholz/nvim-lastplace",
 		opts = {},
-	},
-	{
-		"elentok/scriptify.nvim",
-		keys = {
-			{ "<leader>s", "<cmd>Scriptify<cr>", desc = "Scriptify" },
-		},
-		opts = {},
-		cmd = { "Scriptify" },
-	},
-	{
-		"roobert/f-string-toggle.nvim",
-		opts = {
-			key_binding = "fs",
-		},
 	},
 	{
 		"sQVe/sort.nvim",
@@ -445,24 +455,41 @@ local others = {
 		"cappyzawa/trim.nvim",
 		opts = {},
 	},
-		{
-		"VidocqH/lsp-lens.nvim",
+	{
+		"nacro90/numb.nvim",
 		opts = {},
 	},
-		{
-		"vidocqh/auto-indent.nvim",
+	{
+		"chrisgrieser/nvim-puppeteer",
+		lazy = false,
+	},
+	{
+		"roobert/f-string-toggle.nvim",
+		opts = {
+			key_binding = "fs",
+		},
+	},
+	{
+		"elentok/scriptify.nvim",
+		keys = {
+			{ "<leader>s", "<cmd>Scriptify<cr>", desc = "Scriptify" },
+		},
+		opts = {},
+		cmd = { "Scriptify" },
+	},
+	{
+		"gbprod/yanky.nvim",
 		opts = {},
 	},
-		{
-		"sontungexpt/stcursorword",
+	{
+		"nemanjamalesija/smart-paste.nvim",
 		event = "VeryLazy",
 		config = true,
 	},
+}
+
+local tag_color = {
 	{
-		"m-demare/hlargs.nvim",
-		opts = {},
-	},
-		{
 		"NvChad/nvim-colorizer.lua",
 		opts = {
 			user_default_options = {
@@ -470,16 +497,23 @@ local others = {
 			},
 		},
 	},
-	{
-		"chentoast/marks.nvim",
-		opts = {},
-	},
+}
+
+local tag_search = {
 	{
 		"kevinhwang91/nvim-hlslens",
 		opts = {},
 	},
+}
+
+local others = {
 	{
-		"nacro90/numb.nvim",
+		"sontungexpt/stcursorword",
+		event = "VeryLazy",
+		config = true,
+	},
+	{
+		"chentoast/marks.nvim",
 		opts = {},
 	},
 
@@ -488,48 +522,28 @@ local others = {
 		opts = {},
 	},
 	{
-		"chrisgrieser/nvim-puppeteer",
-		lazy = false,
-	},
-	{
-		"hedyhli/outline.nvim",
-		lazy = true,
-		cmd = { "Outline", "OutlineOpen" },
-		keys = {
-			{ "<leader>o", "<cmd>Outline<cr>", desc = "Toggle Outline" },
-		},
-		opts = {
-			outline_window = {
-				width = 40,
-				relative_width = true,
-				auto_close = true,
-				auto_jump = true,
-				show_numbers = true,
-				show_relative_numbers = false,
-				wrap = true,
-			},
-		},
-	},
-	{
 		"echasnovski/mini.diff",
 		version = "*",
 		opts = {},
 	},
 }
 
+-- https://neovimcraft.com/
 local plugins = {
-	cmps,
-	colorschemes,
-	file_explorers,
-	fmts,
 	folkes,
-	gits,
-	icons,
 	imes,
-	lsps,
-	mds,
 	others,
-	treesitters,
+	tag_color,
+	tag_colorscheme,
+	tag_completion,
+	tag_editing_support,
+	tag_file_explorer,
+	tag_formatting,
+	tag_git,
+	tag_icon,
+	tag_lsp,
+	tag_syntax,
+	tag_search,
 	uis,
 }
 
