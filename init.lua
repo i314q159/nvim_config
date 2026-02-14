@@ -163,9 +163,13 @@ local treesitters = {
 		"xzbdmw/colorful-menu.nvim",
 		opts = {},
 	},
+	{
+		"windwp/nvim-ts-autotag",
+		opts = {},
+	},
 }
 
-local lines = {
+local uis = {
 	{
 		"nvim-lualine/lualine.nvim",
 		opts = {
@@ -209,6 +213,46 @@ local lines = {
 	{
 		"i314q159/lsp-info",
 		opts = {},
+	},
+	{
+		"goolord/alpha-nvim",
+		dependencies = { "nvim-mini/mini.icons" },
+		config = function()
+			require("alpha").setup(require("alpha.themes.startify").config)
+		end,
+	},
+	{
+		"petertriho/nvim-scrollbar",
+		opts = {},
+	},
+	{
+		"nvzone/showkeys",
+		cmd = "ShowkeysToggle",
+		opts = {
+			maxkeys = 5,
+		},
+	},
+	{
+		"toppair/reach.nvim",
+		cmd = { "ReachOpen" },
+		opts = {},
+		keys = {
+			{ "<leader>b", "<cmd>ReachOpen buffers<cr>", desc = "ReachOpen Buffers" },
+		},
+	},
+	{
+		"axieax/urlview.nvim",
+		lazy = false,
+		keys = {
+			{ "<leader>u", "<cmd>UrlView buffer<cr>", desc = "Urlview Buffer" },
+		},
+		opts = {},
+	},
+	{
+		"xlboy/vscode-opener.nvim",
+		keys = {
+			{ "<leader>c", "<cmd>lua require('vscode-opener').open()<cr>", desc = "Open VSCode Opener Menu" },
+		},
 	},
 }
 
@@ -282,7 +326,6 @@ local cmps = {
 	{
 		"saghen/blink.cmp",
 		version = "1.*",
-		-- build = "cargo build --release",
 		opts = {
 			keymap = {
 				preset = "super-tab",
@@ -294,6 +337,9 @@ local cmps = {
 local colorschemes = {
 	{
 		"AlexvZyl/nordic.nvim",
+	},
+	{
+		"vyfor/cord.nvim",
 	},
 }
 
@@ -312,7 +358,7 @@ local file_explorers = {
 	{
 		"stevearc/oil.nvim",
 		opts = {},
-		dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
+		dependencies = { "nvim-tree/nvim-web-devicons" },
 		lazy = false,
 		keys = {
 			{ "<leader>e", "<cmd>Oil .<cr>", desc = "Oil root directory" },
@@ -347,27 +393,7 @@ local gits = {
 	},
 }
 
-local plugins = {
-	cmps,
-	gits,
-	fmts,
-	folkes,
-	icons,
-	imes,
-	lines,
-	lsps,
-	mds,
-	treesitters,
-	colorschemes,
-	file_explorers,
-	{
-		"axieax/urlview.nvim",
-		lazy = false,
-		keys = {
-			{ "<leader>u", "<cmd>UrlView buffer<cr>", desc = "Urlview Buffer" },
-		},
-		opts = {},
-	},
+local others = {
 	{
 		"nguyenvukhang/nvim-toggler",
 		keys = {
@@ -386,18 +412,57 @@ local plugins = {
 		opts = {},
 	},
 	{
-		"toppair/reach.nvim",
-		cmd = { "ReachOpen" },
-		opts = {},
-		keys = {
-			{ "<leader>b", "<cmd>ReachOpen buffers<cr>", desc = "ReachOpen Buffers" },
-		},
-	},
-	{
 		"ethanholz/nvim-lastplace",
 		opts = {},
 	},
 	{
+		"elentok/scriptify.nvim",
+		keys = {
+			{ "<leader>s", "<cmd>Scriptify<cr>", desc = "Scriptify" },
+		},
+		opts = {},
+		cmd = { "Scriptify" },
+	},
+	{
+		"roobert/f-string-toggle.nvim",
+		opts = {
+			key_binding = "fs",
+		},
+	},
+	{
+		"sQVe/sort.nvim",
+		opts = {},
+	},
+	{
+		"okuuva/auto-save.nvim",
+		version = "^1.0.0",
+		event = {
+			"InsertLeave",
+			"TextChanged",
+		},
+	},
+	{
+		"cappyzawa/trim.nvim",
+		opts = {},
+	},
+		{
+		"VidocqH/lsp-lens.nvim",
+		opts = {},
+	},
+		{
+		"vidocqh/auto-indent.nvim",
+		opts = {},
+	},
+		{
+		"sontungexpt/stcursorword",
+		event = "VeryLazy",
+		config = true,
+	},
+	{
+		"m-demare/hlargs.nvim",
+		opts = {},
+	},
+		{
 		"NvChad/nvim-colorizer.lua",
 		opts = {
 			user_default_options = {
@@ -417,57 +482,14 @@ local plugins = {
 		"nacro90/numb.nvim",
 		opts = {},
 	},
-	{
-		"VidocqH/lsp-lens.nvim",
-		opts = {},
-	},
+
 	{
 		"stevearc/dressing.nvim",
 		opts = {},
 	},
 	{
-		"elentok/togglr.nvim",
-		opts = {
-			key = "<leader>i",
-		},
-	},
-	{
-		"elentok/scriptify.nvim",
-		keys = {
-			{ "<leader>s", "<cmd>Scriptify<cr>", desc = "Scriptify" },
-		},
-		opts = {},
-		cmd = { "Scriptify" },
-	},
-	{
-		"roobert/f-string-toggle.nvim",
-		opts = {
-			key_binding = "fs",
-		},
-	},
-	{
-		"vidocqh/auto-indent.nvim",
-		opts = {},
-	},
-	{
 		"chrisgrieser/nvim-puppeteer",
 		lazy = false,
-	},
-	{
-		"sontungexpt/stcursorword",
-		event = "VeryLazy",
-		config = true,
-	},
-	{
-		"m-demare/hlargs.nvim",
-		opts = {},
-	},
-	{
-		"nvim-telescope/telescope.nvim",
-		keys = {
-			{ "<leader>t", "<cmd>Telescope<cr>", desc = "Telescope" },
-		},
-		opts = {},
 	},
 	{
 		"hedyhli/outline.nvim",
@@ -489,47 +511,26 @@ local plugins = {
 		},
 	},
 	{
-		"sQVe/sort.nvim",
-		opts = {},
-	},
-	{
-		"windwp/nvim-ts-autotag",
-		opts = {},
-	},
-	{
-		"xlboy/vscode-opener.nvim",
-		keys = {
-			{ "<leader>c", "<cmd>lua require('vscode-opener').open()<cr>", desc = "Open VSCode Opener Menu" },
-		},
-	},
-	{
-		"okuuva/auto-save.nvim",
-		version = "^1.0.0",
-		event = {
-			"InsertLeave",
-			"TextChanged",
-		},
-	},
-	{
 		"echasnovski/mini.diff",
 		version = "*",
 		opts = {},
 	},
-	{
-		"petertriho/nvim-scrollbar",
-		opts = {},
-	},
-	{
-		"nvzone/showkeys",
-		cmd = "ShowkeysToggle",
-		opts = {
-			maxkeys = 5,
-		},
-	},
-	{
-		"cappyzawa/trim.nvim",
-		opts = {},
-	},
+}
+
+local plugins = {
+	cmps,
+	colorschemes,
+	file_explorers,
+	fmts,
+	folkes,
+	gits,
+	icons,
+	imes,
+	lsps,
+	mds,
+	others,
+	treesitters,
+	uis,
 }
 
 require("lazy").setup(plugins, opts)
