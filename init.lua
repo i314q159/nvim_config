@@ -86,6 +86,21 @@ local opts = {
 	},
 }
 
+local lsp_server = {
+	"lua_ls",
+	"stylua",
+	"gopls",
+	"shfmt",
+	"isort",
+	"black",
+}
+
+local fmt_setttings = {
+	lua = { "stylua" },
+	sh = { "shfmt" },
+	python = { "isort", "black" },
+}
+
 local lsps = {
 	{
 		"williamboman/mason-lspconfig.nvim",
@@ -113,11 +128,7 @@ local lsps = {
 	{
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 		opts = {
-			ensure_installed = {
-				"lua_ls",
-				"stylua",
-				"gopls",
-			},
+			ensure_installed = lsp_server,
 		},
 	},
 	{
@@ -134,12 +145,6 @@ local treesitters = {
 			"windwp/nvim-ts-autotag",
 		},
 		build = ":TSUpdate",
-		config = function()
-			require("nvim-treesitter").install({
-				"go",
-				"lua",
-			})
-		end,
 	},
 	{
 		"Wansmer/treesj",
@@ -245,6 +250,10 @@ local folkes = {
 		"folke/lazydev.nvim",
 		opts = {},
 	},
+	{
+		"folke/snacks.nvim",
+		opts = {},
+	},
 }
 
 local icons = {
@@ -261,9 +270,7 @@ local fmts = {
 	{
 		"stevearc/conform.nvim",
 		opts = {
-			formatters_by_ft = {
-				lua = { "stylua" },
-			},
+			formatters_by_ft = fmt_setttings,
 			format_on_save = {
 				lsp_format = "fallback",
 			},
@@ -304,8 +311,6 @@ local mds = {
 local file_explorers = {
 	{
 		"stevearc/oil.nvim",
-		---@module 'oil'
-		---@type oil.SetupOpts
 		opts = {},
 		dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
 		lazy = false,
@@ -314,12 +319,41 @@ local file_explorers = {
 		},
 	},
 }
+local imes = {
+	{
+		"StellarDeca/lazyime.nvim",
+		lazy = true,
+		opts = {},
+		event = {
+			"VeryLazy",
+		},
+	},
+}
+
+local gits = {
+	{
+		"lewis6991/gitsigns.nvim",
+		opts = {},
+		keys = {
+			{ "<leader>h", "<cmd>Gitsigns preview_hunk<cr>", desc = "Gitsigns Preview Hunk" },
+			{ "<leader>n", "<cmd>Gitsigns next_hunk<cr><cr>", desc = "Gitsigns Next Hunk" },
+		},
+		lazy = false,
+	},
+	{
+		"f-person/git-blame.nvim",
+		opts = {},
+		lazy = false,
+	},
+}
 
 local plugins = {
 	cmps,
+	gits,
 	fmts,
 	folkes,
 	icons,
+	imes,
 	lines,
 	lsps,
 	mds,
@@ -376,15 +410,6 @@ local plugins = {
 		opts = {},
 	},
 	{
-		"lewis6991/gitsigns.nvim",
-		opts = {},
-		keys = {
-			{ "<leader>h", "<cmd>Gitsigns preview_hunk<cr>", desc = "Gitsigns Preview Hunk" },
-			{ "<leader>n", "<cmd>Gitsigns next_hunk<cr><cr>", desc = "Gitsigns Next Hunk" },
-		},
-		lazy = false,
-	},
-	{
 		"kevinhwang91/nvim-hlslens",
 		opts = {},
 	},
@@ -432,14 +457,6 @@ local plugins = {
 		"sontungexpt/stcursorword",
 		event = "VeryLazy",
 		config = true,
-	},
-	{
-		"f-person/git-blame.nvim",
-		keys = {
-			{ "<leader>g", "<cmd>GitBlameToggle<cr>", desc = "GitBlame Toggle" },
-		},
-		opts = {},
-		lazy = false,
 	},
 	{
 		"m-demare/hlargs.nvim",
@@ -511,12 +528,6 @@ local plugins = {
 	},
 	{
 		"cappyzawa/trim.nvim",
-		opts = {},
-	},
-	{
-		"y3owk1n/time-machine.nvim",
-		version = "*",
-		cmds = { "TimeMachineToggle" },
 		opts = {},
 	},
 }
