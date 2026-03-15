@@ -284,7 +284,6 @@ local tag_icon = {
 local folkes = {
     {
         "folke/which-key.nvim",
-        event = "VeryLazy",
         opts = {
             preset = "modern",
             triggers = {
@@ -385,9 +384,6 @@ local imes = {
         "StellarDeca/lazyime.nvim",
         lazy = true,
         opts = {},
-        event = {
-            "VeryLazy",
-        },
     },
 }
 
@@ -444,10 +440,7 @@ local tag_editing_support = {
     {
         "okuuva/auto-save.nvim",
         version = "^1.0.0",
-        event = {
-            "InsertLeave",
-            "TextChanged",
-        },
+        event = { "InsertLeave", "TextChanged" },
     },
     {
         "cappyzawa/trim.nvim",
@@ -481,12 +474,10 @@ local tag_editing_support = {
     },
     {
         "nemanjamalesija/smart-paste.nvim",
-        event = "VeryLazy",
         config = true,
     },
     {
         "mcauley-penney/visual-whitespace.nvim",
-        event = "VeryLazy",
     },
 }
 
@@ -511,7 +502,6 @@ local tag_search = {
 local others = {
     {
         "sontungexpt/stcursorword",
-        event = "VeryLazy",
         config = true,
     },
     {
