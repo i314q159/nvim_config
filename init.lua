@@ -62,481 +62,467 @@ local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 local mirror = ""
 
 if not vim.loop.fs_stat(lazypath) then
-    vim.fn.system({
-        "git",
-        "clone",
-        "--filter=blob:none",
-        mirror .. "https://github.com/folke/lazy.nvim.git",
-        "--branch=stable",
-        lazypath,
-    })
+	vim.fn.system({
+		"git",
+		"clone",
+		"--filter=blob:none",
+		mirror .. "https://github.com/folke/lazy.nvim.git",
+		"--branch=stable",
+		lazypath,
+	})
 end
 vim.opt.rtp:prepend(lazypath)
 
 local opts = {
-    git = {
-        url_format = mirror .. "https://github.com/%s.git",
-    },
-    checker = {
-        enabled = true,
-        notify = false,
-    },
-    rocks = {
-        enabled = false,
-    },
+	git = {
+		url_format = mirror .. "https://github.com/%s.git",
+	},
+	checker = {
+		enabled = true,
+		notify = false,
+	},
+	rocks = {
+		enabled = false,
+	},
 }
 
 local lsp_server = {
-    "lua_ls",
-    "stylua",
-    "gopls",
-    "shfmt",
-    "black",
-    "pylsp",
+	"lua_ls",
+	"stylua",
+	"gopls",
+	"shfmt",
+	"black",
+	"pylsp",
+	"jq",
 }
 
 local fmt_setttings = {
-    lua = {
-        "stylua",
-    },
-    sh = {
-        "shfmt",
-    },
-    python = {
-        "black",
-    },
+	lua = {
+		"stylua",
+	},
+	sh = {
+		"shfmt",
+	},
+	python = {
+		"black",
+	},
+	json = {
+		"jq",
+	},
 }
 
 local tag_lsp = {
-    {
-        "williamboman/mason-lspconfig.nvim",
-        dependencies = {
-            "neovim/nvim-lspconfig",
-        },
-        opts = {},
-    },
-    {
-        "williamboman/mason.nvim",
-        opts = {
-            max_concurrent_installers = require("math").huge,
-            github = {
-                download_url_template = mirror .. "https://github.com/%s/releases/download/%s/%s",
-            },
-            ui = {
-                icons = {
-                    package_installed = "++",
-                    package_pending = "->",
-                    package_uninstalled = "--",
-                },
-            },
-        },
-    },
-    {
-        "WhoIsSethDaniel/mason-tool-installer.nvim",
-        opts = {
-            ensure_installed = lsp_server,
-        },
-    },
-    {
-        "VidocqH/lsp-lens.nvim",
-        opts = {},
-    },
-    {
-        "hedyhli/outline.nvim",
-        lazy = true,
-        cmd = { "Outline", "OutlineOpen" },
-        keys = {
-            { "<leader>o", "<cmd>Outline<cr>", desc = "Toggle Outline" },
-        },
-        opts = {
-            outline_window = {
-                width = 40,
-                relative_width = true,
-                auto_close = true,
-                auto_jump = true,
-                show_numbers = true,
-                show_relative_numbers = false,
-                wrap = true,
-            },
-        },
-    },
+	{
+		"williamboman/mason-lspconfig.nvim",
+		dependencies = {
+			"neovim/nvim-lspconfig",
+		},
+		opts = {},
+	},
+	{
+		"williamboman/mason.nvim",
+		opts = {
+			max_concurrent_installers = require("math").huge,
+			github = {
+				download_url_template = mirror .. "https://github.com/%s/releases/download/%s/%s",
+			},
+			ui = {
+				icons = {
+					package_installed = "++",
+					package_pending = "->",
+					package_uninstalled = "--",
+				},
+			},
+		},
+	},
+	{
+		"WhoIsSethDaniel/mason-tool-installer.nvim",
+		opts = {
+			ensure_installed = lsp_server,
+		},
+	},
+	{
+		"VidocqH/lsp-lens.nvim",
+		opts = {},
+	},
+	{
+		"hedyhli/outline.nvim",
+		cmd = { "Outline", "OutlineOpen" },
+		keys = {
+			{ "<leader>o", "<cmd>Outline<cr>", desc = "Toggle Outline" },
+		},
+		opts = {
+			outline_window = {
+				width = 40,
+				relative_width = true,
+				auto_close = true,
+				auto_jump = true,
+				show_numbers = true,
+				show_relative_numbers = false,
+				wrap = true,
+			},
+		},
+	},
 }
 
 local tag_syntax = {
-    {
-        "nvim-treesitter/nvim-treesitter",
-        build = ":TSUpdate",
-    },
-    {
-        "Wansmer/treesj",
-        dependencies = {
-            "nvim-treesitter/nvim-treesitter",
-        },
-        keys = {
-            { "<leader>j", "<cmd>TSJToggle<cr>", desc = "Join Toggle" },
-        },
-        opts = {
-            use_default_keymaps = false,
-            max_join_length = 150 * 2,
-        },
-    },
-    {
-        "xzbdmw/colorful-menu.nvim",
-        opts = {},
-    },
-    {
-        "windwp/nvim-ts-autotag",
-        opts = {},
-    },
-    {
-        "m-demare/hlargs.nvim",
-        opts = {},
-    },
+	{
+		"nvim-treesitter/nvim-treesitter",
+		build = ":TSUpdate",
+	},
+	{
+		"Wansmer/treesj",
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+		},
+		keys = {
+			{ "<leader>j", "<cmd>TSJToggle<cr>", desc = "Join Toggle" },
+		},
+		opts = {
+			use_default_keymaps = false,
+			max_join_length = 150 * 2,
+		},
+	},
+	{
+		"xzbdmw/colorful-menu.nvim",
+		opts = {},
+	},
+	{
+		"windwp/nvim-ts-autotag",
+		opts = {},
+	},
+	{
+		"m-demare/hlargs.nvim",
+		opts = {},
+	},
 }
 
 local uis = {
-    {
-        "nvim-lualine/lualine.nvim",
-        opts = {
-            options = {
-                icons_enabled = true,
-                section_separators = "",
-                component_separators = "",
-            },
-            sections = {
-                lualine_b = {
-                    "branch",
-                    "diff",
-                    "diagnostics",
-                },
-                lualine_c = {
-                    { "filename", path = 2 },
-                },
-                lualine_x = {
-                    {
-                        require("lazy.status").updates,
-                        cond = require("lazy.status").has_updates,
-                    },
-                    {
-                        function()
-                            return require("lsp-info").lsp_info()
-                        end,
-                    },
-                    { "datetime",  style = "iso" },
-                    {
-                        function()
-                            return require("lsp-info").loaded_slash_count()
-                        end,
-                    },
-                    { "encoding" },
-                    { "fileformat" },
-                    { "filetype" },
-                },
-            },
-        },
-    },
-    {
-        "i314q159/lsp-info",
-        opts = {},
-    },
-    {
-        "petertriho/nvim-scrollbar",
-        opts = {},
-    },
-    {
-        "nvzone/showkeys",
-        cmd = "ShowkeysToggle",
-        opts = {
-            maxkeys = 5,
-        },
-    },
-    {
-        "toppair/reach.nvim",
-        cmd = { "ReachOpen" },
-        opts = {},
-        keys = {
-            { "<leader>b", "<cmd>ReachOpen buffers<cr>", desc = "ReachOpen Buffers" },
-        },
-    },
-    {
-        "axieax/urlview.nvim",
-        lazy = false,
-        keys = {
-            { "<leader>u", "<cmd>UrlView buffer<cr>", desc = "Urlview Buffer" },
-        },
-        opts = {},
-    },
-    {
-        "xlboy/vscode-opener.nvim",
-        keys = {
-            { "<leader>c", "<cmd>lua require('vscode-opener').open()<cr>", desc = "Open VSCode Opener Menu" },
-        },
-    },
+	{
+		"nvim-lualine/lualine.nvim",
+		opts = {
+			options = {
+				icons_enabled = true,
+				section_separators = "",
+				component_separators = "",
+			},
+			sections = {
+				lualine_b = {
+					"branch",
+					"diff",
+					"diagnostics",
+				},
+				lualine_c = {
+					{ "filename", path = 2 },
+				},
+				lualine_x = {
+					{
+						require("lazy.status").updates,
+						cond = require("lazy.status").has_updates,
+					},
+					{
+						function()
+							return require("lsp-info").lsp_info()
+						end,
+					},
+					{ "datetime", style = "iso" },
+					{
+						function()
+							return require("lsp-info").loaded_slash_count()
+						end,
+					},
+					{ "encoding" },
+					{ "fileformat" },
+					{ "filetype" },
+				},
+			},
+		},
+	},
+	{
+		"i314q159/lsp-info",
+		opts = {},
+	},
+	{
+		"petertriho/nvim-scrollbar",
+		opts = {},
+	},
+	{
+		"nvzone/showkeys",
+		cmd = "ShowkeysToggle",
+		opts = {
+			maxkeys = 5,
+		},
+	},
+	{
+		"toppair/reach.nvim",
+		cmd = { "ReachOpen" },
+		opts = {},
+		keys = {
+			{ "<leader>b", "<cmd>ReachOpen buffers<cr>", desc = "ReachOpen Buffers" },
+		},
+	},
+	{
+		"axieax/urlview.nvim",
+		keys = {
+			{ "<leader>u", "<cmd>UrlView buffer<cr>", desc = "Urlview Buffer" },
+		},
+		opts = {},
+	},
+	{
+		"xlboy/vscode-opener.nvim",
+		keys = {
+			{ "<leader>c", "<cmd>lua require('vscode-opener').open()<cr>", desc = "Open VSCode Opener Menu" },
+		},
+	},
 }
 
 local tag_icon = {
-    {
-        "nvim-tree/nvim-web-devicons",
-        opts = {},
-    },
+	{
+		"nvim-tree/nvim-web-devicons",
+		opts = {},
+	},
 }
 
 local folkes = {
-    {
-        "folke/which-key.nvim",
-        opts = {
-            preset = "modern",
-            triggers = {
-                "<leader>"
-            }
-        },
-        keys = {
-            { "<leader>k", "<cmd>WhichKey<cr>", desc = "WhichKey" },
-        },
-    },
-    {
-        "folke/todo-comments.nvim",
-        lazy = false,
-        opts = {},
-    },
-    {
-        "folke/trouble.nvim",
-        opts = {
-            position = "bottom",
-            icons = true,
-            auto_close = true,
-        },
-        lazy = false,
-    },
-    {
-        "folke/lazydev.nvim",
-        opts = {},
-    },
+	{
+		"folke/which-key.nvim",
+		opts = {
+			preset = "modern",
+			triggers = {
+				"<leader>",
+			},
+		},
+		keys = {
+			{ "<leader>k", "<cmd>WhichKey<cr>", desc = "WhichKey" },
+		},
+	},
+	{
+		"folke/todo-comments.nvim",
+		opts = {},
+	},
+	{
+		"folke/trouble.nvim",
+		opts = {
+			position = "bottom",
+			icons = true,
+			auto_close = true,
+		},
+	},
+	{
+		"folke/lazydev.nvim",
+		opts = {},
+	},
 }
 
 local tag_formatting = {
-    {
-        "sbdchd/neoformat",
-    },
-    {
-        "stevearc/conform.nvim",
-        opts = {
-            formatters_by_ft = fmt_setttings,
-            format_on_save = {
-                lsp_format = "fallback",
-            },
-        },
-    },
-    {
-        "vidocqh/auto-indent.nvim",
-        opts = {},
-    },
+	{
+		"sbdchd/neoformat",
+	},
+	{
+		"stevearc/conform.nvim",
+		opts = {
+			formatters_by_ft = fmt_setttings,
+			format_on_save = {
+				lsp_format = "fallback",
+			},
+		},
+	},
+	{
+		"vidocqh/auto-indent.nvim",
+		opts = {},
+	},
 }
 
 local tag_completion = {
-    {
-        "saghen/blink.cmp",
-        version = "1.*",
-        opts = {
-            keymap = {
-                preset = "super-tab",
-            },
-            completion = {
-                documentation = {
-                    auto_show = true,
-                },
-            },
-            signature = {
-                enabled = true,
-            },
-            cmdline = {
-                completion = {
-                    menu = {
-                        auto_show = true,
-                    },
-                },
-            },
-        },
-    },
+	{
+		"saghen/blink.cmp",
+		version = "1.*",
+		opts = {
+			keymap = {
+				preset = "super-tab",
+			},
+			completion = {
+				documentation = {
+					auto_show = true,
+				},
+			},
+			signature = {
+				enabled = true,
+			},
+			cmdline = {
+				completion = {
+					menu = {
+						auto_show = true,
+					},
+				},
+			},
+		},
+	},
 }
 
 local tag_colorscheme = {
-    {
-        "EdenEast/nightfox.nvim",
-        priority = 1000,
-    },
+	{
+		"EdenEast/nightfox.nvim",
+		priority = 1000,
+	},
 }
 
 local tag_file_explorer = {
-    {
-        "stevearc/oil.nvim",
-        opts = {},
-        dependencies = { "nvim-tree/nvim-web-devicons" },
-        lazy = false,
-        keys = {
-            { "<leader>e", "<cmd>Oil .<cr>", desc = "Oil root directory" },
-        },
-    },
-}
-
-local imes = {
-    {
-        "StellarDeca/lazyime.nvim",
-        lazy = true,
-        opts = {},
-    },
+	{
+		"stevearc/oil.nvim",
+		opts = {},
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		keys = {
+			{ "<leader>e", "<cmd>Oil .<cr>", desc = "Oil root directory" },
+		},
+	},
 }
 
 local tag_git = {
-    {
-        "lewis6991/gitsigns.nvim",
-        opts = {},
-        keys = {
-            { "<leader>h", "<cmd>Gitsigns preview_hunk<cr>",  desc = "Gitsigns Preview Hunk" },
-            { "<leader>n", "<cmd>Gitsigns next_hunk<cr><cr>", desc = "Gitsigns Next Hunk" },
-        },
-        lazy = false,
-    },
-    {
-        "f-person/git-blame.nvim",
-        opts = {},
-        lazy = false,
-    },
+	{
+		"lewis6991/gitsigns.nvim",
+		opts = {
+			current_line_blame = false,
+			preview_hunk_inline = true,
+		},
+		keys = {
+			{ "<leader>h", "<cmd>Gitsigns preview_hunk_inline<cr>", desc = "Gitsigns Preview Hunk Inline" },
+			{ "<leader>n", "<cmd>Gitsigns next_hunk<cr>", desc = "Gitsigns Next Hunk" },
+		},
+	},
 }
 
 local tag_editing_support = {
-    {
-        "windwp/nvim-autopairs",
-        opts = {},
-    },
-    {
-        "qwavies/smart-backspace.nvim",
-        event = { "InsertEnter", "CmdlineEnter" },
-        opts = {
-            map_bs = false,
-        },
-    },
-    {
-        "numToStr/Comment.nvim",
-        opts = {
-            toggler = { line = "<C-\\>" },
-        },
-    },
-    {
-        "nguyenvukhang/nvim-toggler",
-        keys = {
-            { "<leader>i", "require('nvim-toggler').toggle", desc = "Toggle Word" },
-        },
-        opts = {},
-    },
-    {
-        "ethanholz/nvim-lastplace",
-        opts = {},
-    },
-    {
-        "sQVe/sort.nvim",
-        opts = {},
-    },
-    {
-        "okuuva/auto-save.nvim",
-        version = "^1.0.0",
-        event = { "InsertLeave", "TextChanged" },
-    },
-    {
-        "cappyzawa/trim.nvim",
-        opts = {},
-    },
-    {
-        "nacro90/numb.nvim",
-        opts = {},
-    },
-    {
-        "chrisgrieser/nvim-puppeteer",
-        lazy = false,
-    },
-    {
-        "roobert/f-string-toggle.nvim",
-        opts = {
-            key_binding = "fs",
-        },
-    },
-    {
-        "elentok/scriptify.nvim",
-        keys = {
-            { "<leader>s", "<cmd>Scriptify<cr>", desc = "Scriptify" },
-        },
-        opts = {},
-        cmd = { "Scriptify" },
-    },
-    {
-        "gbprod/yanky.nvim",
-        opts = {},
-    },
-    {
-        "nemanjamalesija/smart-paste.nvim",
-        config = true,
-    },
-    {
-        "mcauley-penney/visual-whitespace.nvim",
-    },
+	{
+		"windwp/nvim-autopairs",
+		opts = {},
+	},
+	{
+		"qwavies/smart-backspace.nvim",
+		event = { "InsertEnter", "CmdlineEnter" },
+		opts = {
+			map_bs = false,
+		},
+	},
+	{
+		"numToStr/Comment.nvim",
+		opts = {
+			toggler = { line = "<C-\\>" },
+		},
+	},
+	{
+		"nguyenvukhang/nvim-toggler",
+		keys = {
+			{ "<leader>i", "require('nvim-toggler').toggle", desc = "Toggle Word" },
+		},
+		opts = {},
+	},
+	{
+		"ethanholz/nvim-lastplace",
+		opts = {},
+	},
+	{
+		"sQVe/sort.nvim",
+		opts = {},
+	},
+	{
+		"okuuva/auto-save.nvim",
+		version = "^1.0.0",
+		event = { "InsertLeave", "TextChanged" },
+	},
+	{
+		"cappyzawa/trim.nvim",
+		opts = {},
+	},
+	{
+		"nacro90/numb.nvim",
+		opts = {},
+	},
+	{
+		"chrisgrieser/nvim-puppeteer",
+	},
+	{
+		"roobert/f-string-toggle.nvim",
+		opts = {
+			key_binding = "fs",
+		},
+	},
+	{
+		"elentok/scriptify.nvim",
+		keys = {
+			{ "<leader>s", "<cmd>Scriptify<cr>", desc = "Scriptify" },
+		},
+		opts = {},
+		cmd = { "Scriptify" },
+	},
+	{
+		"gbprod/yanky.nvim",
+		opts = {},
+	},
+	{
+		"nemanjamalesija/smart-paste.nvim",
+		config = true,
+	},
+	{
+		"mcauley-penney/visual-whitespace.nvim",
+	},
 }
 
 local tag_color = {
-    {
-        "NvChad/nvim-colorizer.lua",
-        opts = {
-            user_default_options = {
-                mode = "virtualtext",
-            },
-        },
-    },
+	{
+		"NvChad/nvim-colorizer.lua",
+		opts = {
+			user_default_options = {
+				mode = "virtualtext",
+			},
+		},
+	},
 }
 
 local tag_search = {
-    {
-        "kevinhwang91/nvim-hlslens",
-        opts = {},
-    },
+	{
+		"kevinhwang91/nvim-hlslens",
+		opts = {},
+	},
 }
 
 local others = {
-    {
-        "sontungexpt/stcursorword",
-        config = true,
-    },
-    {
-        "chentoast/marks.nvim",
-        opts = {},
-    },
+	{
+		"sontungexpt/stcursorword",
+		config = true,
+	},
+	{
+		"chentoast/marks.nvim",
+		opts = {},
+	},
 
-    {
-        "stevearc/dressing.nvim",
-        opts = {},
-    },
-    {
-        "echasnovski/mini.diff",
-        version = "*",
-        opts = {},
-    },
+	{
+		"stevearc/dressing.nvim",
+		opts = {},
+	},
+	{
+		"echasnovski/mini.diff",
+		version = "*",
+		opts = {},
+	},
 }
 
 -- https://neovimcraft.com/
 local plugins = {
-    folkes,
-    imes,
-    others,
-    tag_color,
-    tag_colorscheme,
-    tag_completion,
-    tag_editing_support,
-    tag_file_explorer,
-    tag_formatting,
-    tag_git,
-    tag_icon,
-    tag_lsp,
-    tag_search,
-    tag_syntax,
-    uis,
+	folkes,
+	others,
+	tag_color,
+	tag_colorscheme,
+	tag_completion,
+	tag_editing_support,
+	tag_file_explorer,
+	tag_formatting,
+	tag_git,
+	tag_icon,
+	tag_lsp,
+	tag_search,
+	tag_syntax,
+	uis,
 }
 
 require("lazy").setup(plugins, opts)
