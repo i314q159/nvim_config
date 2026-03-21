@@ -57,11 +57,24 @@ vim.api.nvim_set_keymap("n", "<leader>q", "<cmd>wqa<cr>", { noremap = true, sile
 vim.api.nvim_set_keymap("n", "<C-f>", "*", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>a", "gg<S-v>G", { noremap = true, silent = true })
 
+-- statusline
+vim.opt.statusline = ""
+vim.opt.statusline:append("%{toupper(mode())}")
+vim.opt.statusline:append(" %f")
+vim.opt.statusline:append(" %m")
+
+vim.opt.statusline:append("%=")
+
+vim.opt.statusline:append(" %{strftime('%Y-%m-%d')}")
+vim.opt.statusline:append(" %p%%")
+vim.opt.statusline:append(" %l:%L")
+vim.opt.statusline:append(" %{&filetype}")
+
 -- folke/lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 local mirror = ""
 
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
 	vim.fn.system({
 		"git",
 		"clone",
@@ -163,6 +176,10 @@ local tag_lsp = {
 			},
 		},
 	},
+	{
+		"j-hui/fidget.nvim",
+		opts = {},
+	},
 }
 
 local tag_syntax = {
@@ -199,54 +216,6 @@ local tag_syntax = {
 
 local uis = {
 	{
-		"nvim-lualine/lualine.nvim",
-		opts = {
-			options = {
-				icons_enabled = true,
-				section_separators = "",
-				component_separators = "",
-			},
-			sections = {
-				lualine_b = {
-					"branch",
-					"diff",
-					"diagnostics",
-				},
-				lualine_c = {
-					{ "filename", path = 2 },
-				},
-				lualine_x = {
-					{
-						require("lazy.status").updates,
-						cond = require("lazy.status").has_updates,
-					},
-					{
-						function()
-							return require("lsp-info").lsp_info()
-						end,
-					},
-					{ "datetime", style = "iso" },
-					{
-						function()
-							return require("lsp-info").loaded_slash_count()
-						end,
-					},
-					{ "encoding" },
-					{ "fileformat" },
-					{ "filetype" },
-				},
-			},
-		},
-	},
-	{
-		"i314q159/lsp-info",
-		opts = {},
-	},
-	{
-		"petertriho/nvim-scrollbar",
-		opts = {},
-	},
-	{
 		"nvzone/showkeys",
 		cmd = "ShowkeysToggle",
 		opts = {
@@ -274,11 +243,9 @@ local uis = {
 			{ "<leader>c", "<cmd>lua require('vscode-opener').open()<cr>", desc = "Open VSCode Opener Menu" },
 		},
 	},
-}
-
-local tag_icon = {
 	{
-		"nvim-tree/nvim-web-devicons",
+		"lukas-reineke/indent-blankline.nvim",
+		main = "ibl",
 		opts = {},
 	},
 }
@@ -339,7 +306,7 @@ local tag_completion = {
 		version = "1.*",
 		opts = {
 			keymap = {
-				preset = "super-tab",
+				preset = "enter",
 			},
 			completion = {
 				documentation = {
@@ -518,7 +485,6 @@ local plugins = {
 	tag_file_explorer,
 	tag_formatting,
 	tag_git,
-	tag_icon,
 	tag_lsp,
 	tag_search,
 	tag_syntax,
