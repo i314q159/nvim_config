@@ -104,8 +104,6 @@ local lsp_server = {
 	"stylua",
 	"gopls",
 	"shfmt",
-	"black",
-	"pylsp",
 	"jq",
 }
 
@@ -115,9 +113,6 @@ local fmt_setttings = {
 	},
 	sh = {
 		"shfmt",
-	},
-	python = {
-		"black",
 	},
 	json = {
 		"jq",
