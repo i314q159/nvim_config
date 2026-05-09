@@ -57,19 +57,6 @@ vim.api.nvim_set_keymap("n", "<leader>q", "<cmd>wqa<cr>", { noremap = true, sile
 vim.api.nvim_set_keymap("n", "<C-f>", "*", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>a", "gg<S-v>G", { noremap = true, silent = true })
 
--- statusline
-vim.opt.statusline = ""
-vim.opt.statusline:append("%{toupper(mode())}")
-vim.opt.statusline:append(" %f")
-vim.opt.statusline:append(" %m")
-
-vim.opt.statusline:append("%=")
-
-vim.opt.statusline:append(" %{strftime('%Y-%m-%d')}")
-vim.opt.statusline:append(" %p%%")
-vim.opt.statusline:append(" %l:%L")
-vim.opt.statusline:append(" %{&filetype}")
-
 -- folke/lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 local mirror = ""
@@ -149,10 +136,7 @@ local tag_lsp = {
 			ensure_installed = lsp_server,
 		},
 	},
-	{
-		"VidocqH/lsp-lens.nvim",
-		opts = {},
-	},
+	-- { "VidocqH/lsp-lens.nvim", opts = {} },
 	{
 		"hedyhli/outline.nvim",
 		cmd = { "Outline", "OutlineOpen" },
@@ -171,10 +155,7 @@ local tag_lsp = {
 			},
 		},
 	},
-	{
-		"j-hui/fidget.nvim",
-		opts = {},
-	},
+	-- { "j-hui/fidget.nvim", opts = {} },
 }
 
 local tag_syntax = {
@@ -322,13 +303,6 @@ local tag_completion = {
 	},
 }
 
-local tag_colorscheme = {
-	{
-		"EdenEast/nightfox.nvim",
-		priority = 1000,
-	},
-}
-
 local tag_file_explorer = {
 	{
 		"stevearc/oil.nvim",
@@ -356,10 +330,6 @@ local tag_git = {
 
 local tag_editing_support = {
 	{
-		"windwp/nvim-autopairs",
-		opts = {},
-	},
-	{
 		"qwavies/smart-backspace.nvim",
 		event = { "InsertEnter", "CmdlineEnter" },
 		opts = {
@@ -383,10 +353,7 @@ local tag_editing_support = {
 		"ethanholz/nvim-lastplace",
 		opts = {},
 	},
-	{
-		"sQVe/sort.nvim",
-		opts = {},
-	},
+
 	{
 		"okuuva/auto-save.nvim",
 		version = "^1.0.0",
@@ -441,40 +408,12 @@ local tag_color = {
 	},
 }
 
-local tag_search = {
-	{
-		"kevinhwang91/nvim-hlslens",
-		opts = {},
-	},
-}
-
-local others = {
-	{
-		"sontungexpt/stcursorword",
-		config = true,
-	},
-	{
-		"chentoast/marks.nvim",
-		opts = {},
-	},
-
-	{
-		"stevearc/dressing.nvim",
-		opts = {},
-	},
-	{
-		"echasnovski/mini.diff",
-		version = "*",
-		opts = {},
-	},
-}
+local tag_search = {}
 
 -- https://neovimcraft.com/
 local plugins = {
 	folkes,
-	others,
 	tag_color,
-	tag_colorscheme,
 	tag_completion,
 	tag_editing_support,
 	tag_file_explorer,
@@ -487,6 +426,32 @@ local plugins = {
 }
 
 require("lazy").setup(plugins, opts)
-vim.cmd("colorscheme carbonfox")
 vim.api.nvim_set_keymap("n", "<leader>l", "<cmd>Lazy<cr>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>m", "<cmd>Mason<cr>", { noremap = true, silent = true })
+
+-- v0.12
+require("vim._core.ui2").enable({
+	enabled = true,
+})
+
+vim.pack.add({
+	-- others
+	-- { src = "https://github.com/chentoast/marks.nvim" },
+	-- { src = "https://github.com/sontungexpt/stcursorword" },
+	-- { src = "https://github.com/echasnovski/mini.diff" },
+
+	-- tag_colorscheme
+	-- "https://github.com/EdenEast/nightfox.nvim",
+
+	-- tag_search
+	-- "https://github.com/kevinhwang91/nvim-hlslens",
+
+	-- tag_lsp
+	-- "https://github.com/j-hui/fidget.nvim",
+
+	-- tag_editing_support
+	-- "https://github.com/sQVe/sort.nvim",
+    "https://github.com/windwp/nvim-autopairs",
+
+})
+vim.cmd.colorscheme("carbonfox")
