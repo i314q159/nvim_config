@@ -136,7 +136,6 @@ local tag_lsp = {
 			ensure_installed = lsp_server,
 		},
 	},
-	-- { "VidocqH/lsp-lens.nvim", opts = {} },
 	{
 		"hedyhli/outline.nvim",
 		cmd = { "Outline", "OutlineOpen" },
@@ -155,73 +154,11 @@ local tag_lsp = {
 			},
 		},
 	},
-	-- { "j-hui/fidget.nvim", opts = {} },
 }
 
 local tag_syntax = {
 	{
-		"nvim-treesitter/nvim-treesitter",
-		build = ":TSUpdate",
-	},
-	{
-		"Wansmer/treesj",
-		dependencies = {
-			"nvim-treesitter/nvim-treesitter",
-		},
-		keys = {
-			{ "<leader>j", "<cmd>TSJToggle<cr>", desc = "Join Toggle" },
-		},
-		opts = {
-			use_default_keymaps = false,
-			max_join_length = 150 * 2,
-		},
-	},
-	{
 		"xzbdmw/colorful-menu.nvim",
-		opts = {},
-	},
-	{
-		"windwp/nvim-ts-autotag",
-		opts = {},
-	},
-	{
-		"m-demare/hlargs.nvim",
-		opts = {},
-	},
-}
-
-local uis = {
-	{
-		"nvzone/showkeys",
-		cmd = "ShowkeysToggle",
-		opts = {
-			maxkeys = 5,
-		},
-	},
-	{
-		"toppair/reach.nvim",
-		cmd = { "ReachOpen" },
-		opts = {},
-		keys = {
-			{ "<leader>b", "<cmd>ReachOpen buffers<cr>", desc = "ReachOpen Buffers" },
-		},
-	},
-	{
-		"axieax/urlview.nvim",
-		keys = {
-			{ "<leader>u", "<cmd>UrlView buffer<cr>", desc = "Urlview Buffer" },
-		},
-		opts = {},
-	},
-	{
-		"xlboy/vscode-opener.nvim",
-		keys = {
-			{ "<leader>c", "<cmd>lua require('vscode-opener').open()<cr>", desc = "Open VSCode Opener Menu" },
-		},
-	},
-	{
-		"lukas-reineke/indent-blankline.nvim",
-		main = "ibl",
 		opts = {},
 	},
 }
@@ -314,28 +251,7 @@ local tag_file_explorer = {
 	},
 }
 
-local tag_git = {
-	{
-		"lewis6991/gitsigns.nvim",
-		opts = {
-			current_line_blame = false,
-			preview_hunk_inline = true,
-		},
-		keys = {
-			{ "<leader>h", "<cmd>Gitsigns preview_hunk_inline<cr>", desc = "Gitsigns Preview Hunk Inline" },
-			{ "<leader>n", "<cmd>Gitsigns next_hunk<cr>", desc = "Gitsigns Next Hunk" },
-		},
-	},
-}
-
 local tag_editing_support = {
-	{
-		"qwavies/smart-backspace.nvim",
-		event = { "InsertEnter", "CmdlineEnter" },
-		opts = {
-			map_bs = false,
-		},
-	},
 	{
 		"numToStr/Comment.nvim",
 		opts = {
@@ -394,6 +310,7 @@ local tag_editing_support = {
 	},
 	{
 		"mcauley-penney/visual-whitespace.nvim",
+		opts = {}
 	},
 }
 
@@ -408,21 +325,86 @@ local tag_color = {
 	},
 }
 
-local tag_search = {}
+local others = {
+	{
+		"chentoast/marks.nvim",
+		opts = {},
+	},
+	{
+		"sontungexpt/stcursorword",
+		opts = {},
+	},
+	{
+		"echasnovski/mini.diff",
+		opts = {},
+	},
 
--- https://neovimcraft.com/
+	{
+		"EdenEast/nightfox.nvim",
+	},
+	{
+		"kevinhwang91/nvim-hlslens",
+		opts = {},
+	},
+	{
+		"j-hui/fidget.nvim",
+		opts = {},
+	},
+	{
+		"sQVe/sort.nvim",
+		opts = {},
+	},
+	{
+		"windwp/nvim-autopairs",
+		opts = {},
+	},
+	{
+		"nvzone/showkeys",
+		cmd = "ShowkeysToggle",
+		opts = {
+			maxkeys = 5,
+		},
+	},
+	{
+		"toppair/reach.nvim",
+		cmd = { "ReachOpen" },
+		opts = {},
+		keys = {
+			{ "<leader>b", "<cmd>ReachOpen buffers<cr>", desc = "ReachOpen Buffers" },
+		},
+	},
+	{
+		"axieax/urlview.nvim",
+		keys = {
+			{ "<leader>u", "<cmd>UrlView buffer<cr>", desc = "Urlview Buffer" },
+		},
+		opts = {},
+	},
+	{
+		"xlboy/vscode-opener.nvim",
+		keys = {
+			{ "<leader>c", "<cmd>lua require('vscode-opener').open()<cr>", desc = "Open VSCode Opener Menu" },
+		},
+	},
+	{
+		"lukas-reineke/indent-blankline.nvim",
+		main = "ibl",
+		opts = {},
+	},
+}
+
 local plugins = {
 	folkes,
+	others,
+
+	-- https://neovimcraft.com/
 	tag_color,
 	tag_completion,
 	tag_editing_support,
 	tag_file_explorer,
 	tag_formatting,
-	tag_git,
 	tag_lsp,
-	tag_search,
 	tag_syntax,
-	uis,
 }
 
 require("lazy").setup(plugins, opts)
@@ -434,24 +416,5 @@ require("vim._core.ui2").enable({
 	enabled = true,
 })
 
-vim.pack.add({
-	-- others
-	-- { src = "https://github.com/chentoast/marks.nvim" },
-	-- { src = "https://github.com/sontungexpt/stcursorword" },
-	-- { src = "https://github.com/echasnovski/mini.diff" },
-
-	-- tag_colorscheme
-	-- "https://github.com/EdenEast/nightfox.nvim",
-
-	-- tag_search
-	-- "https://github.com/kevinhwang91/nvim-hlslens",
-
-	-- tag_lsp
-	-- "https://github.com/j-hui/fidget.nvim",
-
-	-- tag_editing_support
-	-- "https://github.com/sQVe/sort.nvim",
-    "https://github.com/windwp/nvim-autopairs",
-
-})
+vim.pack.add({})
 vim.cmd.colorscheme("carbonfox")
