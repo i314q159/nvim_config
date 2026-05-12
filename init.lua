@@ -59,7 +59,7 @@ vim.api.nvim_set_keymap("n", "<leader>a", "gg<S-v>G", { noremap = true, silent =
 
 -- folke/lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-local mirror = ""
+local mirror = "https://gh-proxy.org/"
 
 if not vim.uv.fs_stat(lazypath) then
 	vim.fn.system({
@@ -108,14 +108,14 @@ local fmt_setttings = {
 
 local tag_lsp = {
 	{
-		"williamboman/mason-lspconfig.nvim",
+		"mason-org/mason-lspconfig.nvim",
 		dependencies = {
 			"neovim/nvim-lspconfig",
 		},
 		opts = {},
 	},
 	{
-		"williamboman/mason.nvim",
+		"mason-org/mason.nvim",
 		opts = {
 			max_concurrent_installers = require("math").huge,
 			github = {
@@ -134,24 +134,6 @@ local tag_lsp = {
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 		opts = {
 			ensure_installed = lsp_server,
-		},
-	},
-	{
-		"hedyhli/outline.nvim",
-		cmd = { "Outline", "OutlineOpen" },
-		keys = {
-			{ "<leader>o", "<cmd>Outline<cr>", desc = "Toggle Outline" },
-		},
-		opts = {
-			outline_window = {
-				width = 40,
-				relative_width = true,
-				auto_close = true,
-				auto_jump = true,
-				show_numbers = true,
-				show_relative_numbers = false,
-				wrap = true,
-			},
 		},
 	},
 }
@@ -310,18 +292,7 @@ local tag_editing_support = {
 	},
 	{
 		"mcauley-penney/visual-whitespace.nvim",
-		opts = {}
-	},
-}
-
-local tag_color = {
-	{
-		"NvChad/nvim-colorizer.lua",
-		opts = {
-			user_default_options = {
-				mode = "virtualtext",
-			},
-		},
+		opts = {},
 	},
 }
 
@@ -337,10 +308,6 @@ local others = {
 	{
 		"echasnovski/mini.diff",
 		opts = {},
-	},
-
-	{
-		"EdenEast/nightfox.nvim",
 	},
 	{
 		"kevinhwang91/nvim-hlslens",
@@ -393,12 +360,18 @@ local others = {
 	},
 }
 
+local tag_colorscheme = {
+	{
+		"EdenEast/nightfox.nvim",
+	},
+}
+
 local plugins = {
 	folkes,
 	others,
 
 	-- https://neovimcraft.com/
-	tag_color,
+	tag_colorscheme,
 	tag_completion,
 	tag_editing_support,
 	tag_file_explorer,
@@ -416,5 +389,10 @@ require("vim._core.ui2").enable({
 	enabled = true,
 })
 
-vim.pack.add({})
+vim.opt.packpath:append(vim.fn.stdpath("config") .. "/site")
+vim.cmd("packloadall")
+
+vim.pack.add({
+	{ src = mirror .. "https://github.com/catppuccin/nvim", name = "catppuccin" },
+})
 vim.cmd.colorscheme("carbonfox")
