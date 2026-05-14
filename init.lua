@@ -136,6 +136,10 @@ local tag_lsp = {
 			ensure_installed = lsp_server,
 		},
 	},
+	{
+		"j-hui/fidget.nvim",
+		opts = {},
+	},
 }
 
 local tag_syntax = {
@@ -148,6 +152,7 @@ local tag_syntax = {
 local folkes = {
 	{
 		"folke/which-key.nvim",
+		event = "VeryLazy",
 		opts = {
 			preset = "modern",
 			triggers = {
@@ -191,6 +196,11 @@ local tag_formatting = {
 	},
 	{
 		"vidocqh/auto-indent.nvim",
+		opts = {},
+	},
+	{
+		"lukas-reineke/indent-blankline.nvim",
+		main = "ibl",
 		opts = {},
 	},
 }
@@ -251,7 +261,6 @@ local tag_editing_support = {
 		"ethanholz/nvim-lastplace",
 		opts = {},
 	},
-
 	{
 		"okuuva/auto-save.nvim",
 		version = "^1.0.0",
@@ -294,35 +303,23 @@ local tag_editing_support = {
 		"mcauley-penney/visual-whitespace.nvim",
 		opts = {},
 	},
-}
-
-local others = {
 	{
-		"chentoast/marks.nvim",
-		opts = {},
-	},
-	{
-		"sontungexpt/stcursorword",
-		opts = {},
-	},
-	{
-		"echasnovski/mini.diff",
-		opts = {},
-	},
-	{
-		"kevinhwang91/nvim-hlslens",
-		opts = {},
-	},
-	{
-		"j-hui/fidget.nvim",
+		"windwp/nvim-autopairs",
 		opts = {},
 	},
 	{
 		"sQVe/sort.nvim",
 		opts = {},
 	},
+}
+
+local others = {
 	{
-		"windwp/nvim-autopairs",
+		"sontungexpt/stcursorword",
+		opts = {},
+	},
+	{
+		"echasnovski/mini.diff",
 		opts = {},
 	},
 	{
@@ -353,16 +350,18 @@ local others = {
 			{ "<leader>c", "<cmd>lua require('vscode-opener').open()<cr>", desc = "Open VSCode Opener Menu" },
 		},
 	},
-	{
-		"lukas-reineke/indent-blankline.nvim",
-		main = "ibl",
-		opts = {},
-	},
 }
 
 local tag_colorscheme = {
 	{
 		"EdenEast/nightfox.nvim",
+	},
+}
+
+local tag_search = {
+	{
+		"kevinhwang91/nvim-hlslens",
+		opts = {},
 	},
 }
 
@@ -377,6 +376,7 @@ local plugins = {
 	tag_file_explorer,
 	tag_formatting,
 	tag_lsp,
+	tag_search,
 	tag_syntax,
 }
 
